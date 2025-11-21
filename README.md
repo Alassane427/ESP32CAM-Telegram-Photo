@@ -1,151 +1,154 @@
-ESP32-CAM Photo to Telegram Bot
+# ESP32-CAM Photo to Telegram Bot
 
-CSN150 – Advanced ESP32 Projects
-Student: Alassane Camara
+**CSN150 – Advanced ESP32 Projects**
+**Student:** Alassane Camara
 
-Overview
+---
 
-This project uses an ESP32-CAM (AI Thinker) to capture a live photo and send it to a Telegram bot using the Telegram Bot API over HTTPS.
-The ESP32-CAM listens for Telegram commands:
+## Overview
 
-/photo – captures and sends a picture
+This project uses an ESP32-CAM (AI Thinker) to capture a photo and send it to a Telegram bot using the Telegram Bot API over HTTPS. The ESP32-CAM responds to the following commands:
 
-/flash – toggles the flash LED
+* `/photo` – captures and sends a picture
+* `/flash` – toggles the flash LED
 
 Documentation followed:
-https://randomnerdtutorials.com/telegram-esp32-cam-photo-arduino/
+[https://randomnerdtutorials.com/telegram-esp32-cam-photo-arduino/](https://randomnerdtutorials.com/telegram-esp32-cam-photo-arduino/)
 
-Purpose
+---
 
-This assignment demonstrates how IoT devices communicate with cloud APIs. It covers:
+## Purpose
 
-ESP32-CAM Wi-Fi configuration
+This assignment demonstrates how IoT devices communicate with cloud APIs. It includes:
 
-Using the Telegram Bot API
+* ESP32-CAM Wi-Fi configuration
+* Interacting with the Telegram Bot API
+* Sending images through HTTPS
+* Remote camera control
+* Understanding IoT automation concepts
 
-Sending images over HTTPS
+---
 
-Remote camera command execution
+## Equipment Used
 
-Basic IoT automation and cloud communication concepts
+* ESP32-CAM AI Thinker
+* USB-C ESP32-CAM programmer (no jumper wires, no FTDI module)
+* USB-C cable
+* Laptop running Arduino IDE
+* Wi-Fi network
+* Telegram application (Web or Mobile)
 
-Equipment Used
+---
 
-ESP32-CAM AI Thinker
+## Tools & Software
 
-USB-C ESP32-CAM programmer (no jumper wires, no FTDI module)
+* Arduino IDE 2.3.6
+* ESP32 Board Package
+* UniversalTelegramBot library
+* ArduinoJson library
+* Telegram BotFather
+* GitHub for documentation
+* ChatGPT (GPT-5.1) for troubleshooting assistance
 
-USB-C cable
+---
 
-Laptop with Arduino IDE installed
+## Steps I Followed
 
-Wi-Fi network
+### 1. Created the Telegram Bot
 
-Telegram application (Web or Mobile)
+* Opened Telegram
+* Searched for **BotFather**
+* Used the `/newbot` command
+* Created the bot and received the Bot Token
 
-Tools & Software
+### 2. Obtained My Chat ID (Using the Telegram API)
 
-Arduino IDE 2.3.6
+I retrieved my Chat ID using the API method:
 
-ESP32 Board Package
+1. Opened a chat with my Telegram bot
+2. Sent the message: `hello`
+3. Opened this link in the browser:
 
-UniversalTelegramBot library
+   ```
+   https://api.telegram.org/bot<my_token>/getUpdates
+   ```
+4. Refreshed the page
+5. Copied the `"chat":{"id": ... }` value
 
-ArduinoJson library
+### 3. Prepared the Arduino IDE
 
-Telegram BotFather
+* Installed the ESP32 board package
+* Selected the correct board: **AI Thinker ESP32-CAM**
+* Installed required libraries:
 
-GitHub for documentation
+  * UniversalTelegramBot
+  * ArduinoJson
 
-ChatGPT (GPT-5.1) for troubleshooting assistance
+### 4. Connected the ESP32-CAM
 
-Steps I Followed
-1. Created the Telegram Bot
+No FTDI module or jumper wires were used. The setup was:
 
-Opened Telegram
+* Inserted the ESP32-CAM into the USB-C programmer
+* Connected the USB-C cable to my laptop
+* Programmer automatically handled upload mode
 
-Searched for BotFather
+### 5. Entered Wi-Fi and Bot Credentials
 
-Used the /newbot command
+Updated the following lines in the sketch:
 
-Created the bot and received the Bot Token
-
-2. Obtained My Chat ID (Actual Method Used)
-
-Instead of using @myidbot, I retrieved my Chat ID directly through the Telegram API:
-
-Opened a chat with my bot
-
-Typed “hello”
-
-Opened the link:
-
-https://api.telegram.org/bot<my_token>/getUpdates
-
-
-Refreshed the page
-
-Copied the "chat":{"id": ... } value
-
-3. Prepared the Arduino IDE
-
-Installed the ESP32 board package
-
-Selected the board: AI Thinker ESP32-CAM
-
-Installed the required libraries:
-
-UniversalTelegramBot
-
-ArduinoJson
-
-4. Connected the ESP32-CAM
-
-No FTDI programmer or jumper wires were used.
-I connected the ESP32-CAM directly using a USB-C ESP32-CAM programmer:
-
-Plugged the ESP32-CAM into the USB-C programmer
-
-Connected the programmer to my laptop
-
-The programmer handled upload mode automatically
-
-5. Entered My Wi-Fi and Telegram Credentials
-
-Edited the sketch:
-
+```
 const char* ssid = "A*****2";
 const char* password = "******";
 String BOTtoken = "<my-bot-token>";
 String CHAT_ID = "<my-chat-id>";
+```
 
-6. Uploaded the Code
+### 6. Uploaded the Code
 
-Selected the correct COM port
+* Selected the correct COM port
+* Clicked **Upload**
+* The ESP32-CAM reset successfully and the upload completed
 
-Clicked Upload
+### 7. Tested Telegram Commands
 
-The ESP32-CAM reset properly, and the upload succeeded
+Inside the Telegram bot conversation:
 
-7. Tested Telegram Commands
+* `/start` – bot sent the welcome message
+* `/photo` – ESP32-CAM captured and sent a picture
+* `/flash` – toggled the flash LED
 
-Inside the bot conversation:
+Everything worked correctly.
 
-/start – bot sent the welcome message
+---
 
-/photo – the ESP32-CAM captured and sent a photo
+## Problems / Solutions
 
-/flash – toggled the onboard flash LED
+### ESP32-CAM not responding at first
 
-All commands worked successfully.
+**Cause:** Incorrect board selected.
+**Solution:** Switched to **AI Thinker ESP32-CAM** in Arduino IDE.
 
-Problems / Solutions
-Problem: ESP32-CAM did not respond at first
+---
 
-Cause: Incorrect board selection in Arduino IDE
-Solution: Changed board to “AI Thinker ESP32-CAM”
+## Final Report
 
-Final Report
+The ESP32-CAM successfully connected to Wi-Fi, communicated with the Telegram API, and responded to commands by capturing and sending live images. This assignment demonstrated IoT-to-cloud communication, HTTPS API usage, and ESP32-CAM camera functionality. Using a USB-C programmer made the upload process simple and reliable with no need for jumper wires or FTDI hardware.
 
-This project was completed successfully. The ESP32-CCAM connected to Wi-Fi, communicated securely with the Telegram API, and responded to Telegram commands by capturing and sending live photos. The assignment demonstrated practical IoT-to-cloud integration, API communication, HTTPS requests on microcontrollers, and basic camera functionality using the ESP32-CAM.
-Using a USB-C programmer made the upload process simple and reliable without jumper wires or FTDI hardware.
+---
+
+## Screenshots
+
+### ESP32-CAM Telegram Photo
+
+<img width="960" height="1020" alt="telegram_serial_monitor" src="https://github.com/user-attachments/assets/449a9ed6-49c4-4fe0-b9cf-41ba3b454f5b" />
+
+### Telegram Bot Receiving Photo
+
+<img width="1920" height="1020" alt="telegram_bot" src="https://github.com/user-attachments/assets/67883cfd-faf0-4520-ba07-40bbac7f78ff" />
+
+
+---
+
+## GitHub Repository
+
+[https://github.com/Alassane427/ESP32CAM-Telegram-Photo](https://github.com/Alassane427/ESP32CAM-Telegram-Photo)
