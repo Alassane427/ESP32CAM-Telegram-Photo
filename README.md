@@ -48,7 +48,6 @@ This assignment demonstrates how IoT devices communicate with cloud APIs. It inc
 * ArduinoJson library
 * Telegram BotFather
 * GitHub for documentation
-* ChatGPT (GPT-5.1) for troubleshooting assistance
 
 ---
 
